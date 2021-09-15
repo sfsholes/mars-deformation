@@ -17,8 +17,6 @@ The [input] directory contains all the different mappings of the Arabia and Deut
     [fig3] directory contains the different mappings of the Arabia Level from Sholes et al. (2021)
     [fig4] directory contains the original open basin delta data from di Achille and Hynek (2010), updated delta data from Rivera-Hernandez and Palucis (2019), and the valley netork termini data from Chan et al. (2018). 
 
-The [figures] directory has copies of all four figures produced for comparison. 
-
 
 References:
 
