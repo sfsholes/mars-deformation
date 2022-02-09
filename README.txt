@@ -1,33 +1,33 @@
-README for Sholes and Rivera-Hernandez (2021) submitted to Icarus
-September 14, 2021
+README
+Sholes and Rivera-Hernandez 2022 (Icarus)
+Code for: Constraints on the Uncertainty, Timing, and Magnitude of Potential \
+Mars Oceans from Topographic Deformation Models
 
-The file [TID_model.py] can be run in the terminal and will plot out all four figures used in the paper as well as print out the stats used in Table 1. 
+To run the model and create all the figures simply run the Python code:
+-> python TID_Model.py
 
-The file [TID_functions.py] contains the acutal functions used for modeling the Tharsis-induced deformation of the input features along with the associated true polar wander component. 
+The TID model and other useful functions are in the TID_functions.py file.
 
-Please cite the Sholes and Rivera-Hernandez (2021) paper along with the Citron et al. (2018) paper that the model is based on. 
+I have set it up so that data is loaded as a "Shoreline" class (note: this does
+not imply they are actually shorelines) which takes in a file path to a csv
+file and initializes a lot of the needed information. You can play with the data
+by accessing the .df variable which finds the contributions due to Tharsis
+directly and its associated TPW via the premade pre_tharsis_maps() function
+which handles the creation of the TID model map. 
 
-The [data] directory contains the necessary input data derived from external sources which are:
-    [geo_CSlm.npy] and [shp_cslm.npy] are the shape and geoid components of the Tharsis deformation from Citron et al. (2018)
-    [megt90n000cb.txt] is the 4 pixels per degree topographic map of Mars from the Mars Orbiter Laser Altimeter (MOLA) see 
-                       https://pds-geosciences.wustl.edu/missions/mgs/megdr.html
-    [Bouley2016_FlattenedNorthernPlains.csv] is a topographic map of Mars with the excess topography of the northern plains of Mars from Bouley et al. (2016). 
+Note: The optimization codes will create an output (.x, see code for examples)
+which is a list object with item[0] being the best-fit value of C (percentage of
+Tharsis buildup) and item[1] being the 'mean sea level.' However, note that the
+latter is a remnant of older code and the rms function no longer uses that value
+to minimize itself (instead it natively calculates the mean paleo-elevation).
+So, do not use item[1] as the 'mean sea level' but rather calculate it yourself,
+e.g., dataframe['OPT'].mean().
 
-The [input] directory contains all the different mappings of the Arabia and Deuteronilus Levels along with the open basin deltas and valley network termini. 
-    [fig3] directory contains the different mappings of the Arabia Level from Sholes et al. (2021)
-    [fig4] directory contains the original open basin delta data from di Achille and Hynek (2010), updated delta data from Rivera-Hernandez and Palucis (2019), and the valley netork termini data from Chan et al. (2018). 
-
-
-References:
-
-Bouley, S., Baratoux, D., Matsuyama, I., Forget, F., Séjourné, A., Turbet, M., & Costard, F. (2016). Late Tharsis formation and implications for early Mars. Nature, 531(7594), 344-347. doi:10.1038/nature17171
-
-Chan, N. H., Perron, J. T., Mitrovica, J. X., & Gomez, N. A. (2018). New Evidence of an Ancient Martian Ocean from the Global Distribution of Valley Networks. Journal of Geophysical Research: Planets, 123(8), 2138-2150. doi:10.1029/2018JE005536
-
-Citron, R. I., Manga, M., & Hemingway, D. J. (2018). Timing of oceans on Mars from shoreline deformation. Nature, 555(7698), 643-646. doi:10.1038/nature26144
-Di Achille, G., & Hynek, B. M. (2010). Ancient ocean on Mars supported by global distribution of deltas and valleys. Nature Geoscience, 3(7), 459-463. doi:10.1038/ngeo891
-
-Rivera-Hernandez, F., & Palucis, M. C. (2019). Do deltas along the crustal dichotomy boundary of Mars in the Gale crater region record a northern ocean? Geophysical Research Letters. doi:10.1029/2019GL083046
-
-Sholes, S. F., Dickeson, Z. I., Montgomery, D., & Catling, D. (2021). Where are Mars’ Hypothesized Ocean Shorelines? Large Lateral and Topographic Offsets Between Different Versions of Paleoshoreline Maps. Journal of Geophysical Research: Planets, 126. doi:10.1029/2020JE006486
-
+Note on Data: There is a slight offset (~20 km S) that we needed to do with the
+original XY data provided by Ivanov et al. (2017). This is some weird projection
+issue that ArcMap has between coordinate systems (and Citron et al. 2018 had to
+do the same thing - personal communication). This does not change their results
+nor ours as it is just a manual projection transformation and we matched it to
+the geomorphology observed in the THEMIS-IR daytime mosaic. Note however, that
+we did update their elevation data using the MOLA/HRSC 200 m/px digital
+elevation model. This is also true with the data used in Sholes et al. (2021).
